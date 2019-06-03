@@ -1,0 +1,12 @@
+*.o
+*.a
+*.gch
+*.out
+*.dSYM/
+.nfs*
+.vscode
+.DS_Store
+
+minishell
+tests/norights
+tests/tests.sh
