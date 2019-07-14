@@ -4,16 +4,21 @@ CFLAGS = -Wall -Wextra -Werror
 
 NAME = minishell
 
-SRC = *.c
+SRC = cd.c env.c minishell.c replace.c echo.c exit.c minishell2.c shell_split.c
+
+OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
-$(NAME):
+%.o: %.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(NAME): $(OBJ)
 	@make -C libft
 	@make -C libft/ft_printf
 	@make -C libft/get_next_line
 	@make -C libft/minishell_utils
-	@$(CC) $(CFLAGS) $(SRC) -Llibft -lft -Llibft/ft_printf -lftprintf \
+	@$(CC) $(CFLAGS) $(OBJ) -Llibft -lft -Llibft/ft_printf -lftprintf \
 		-Llibft/get_next_line -lftget_next_line -Llibft/minishell_utils -lftminishell_utils -o $@
 
 clean:
@@ -23,11 +28,12 @@ clean:
 	@make clean -C libft/minishell_utils
 	@rm -f *.o
 
-fclean: clean
+fclean:
 	@make fclean -C libft
 	@make fclean -C libft/ft_printf
 	@make fclean -C libft/get_next_line
 	@make fclean -C libft/minishell_utils
+	@rm -f *.o
 	@rm -f $(NAME)
 
 norm:
