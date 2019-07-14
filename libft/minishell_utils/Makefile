@@ -1,13 +1,16 @@
 CC = gcc
-CFLAGS = -c -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 NAME = libftminishell_utils.a
-SRC = minishell_utils*.c node*.c
+SRC = minishell_utils.c minishell_utils2.c minishell_utils3.c minishell_utils4.c \
+	minishell_utils5.c node.c node2.c node3.c
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
-$(NAME):
-	$(CC) $(CFLAGS) $(SRC)
+%.o: %.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(NAME): $(OBJ)
 	ar rc $(NAME) $(OBJ)
 	ranlib $(NAME)
 
